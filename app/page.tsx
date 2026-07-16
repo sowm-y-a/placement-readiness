@@ -10,8 +10,8 @@ import {
   getDaysRun,
   getTodayId,
 } from '@/lib/data'
-import { AggregatedHeatmap } from '@/components/Heatmap'
-import { getTodayMission, getMission } from '@/lib/missions'
+import { CohortRadarChart } from '@/components/CohortRadarChart'
+import { getTodayMission, getMission, MISSIONS_DATA } from '@/lib/missions'
 
 export const metadata: Metadata = {
   title: 'Dashboard — Placement Readiness Portal',
@@ -29,6 +29,7 @@ export default async function DashboardPage() {
   const activityDays = buildActivityDays(roster, attendance)
   const todayMission = getTodayMission()
 
+  const totalMissions = MISSIONS_DATA.length
   const totalStudents = Object.keys(roster).length
   const todayActivityDay = activityDays.find(d => d.id === todayId)
   
@@ -74,28 +75,50 @@ export default async function DashboardPage() {
             Live Dashboard
           </div>
           <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.1] mb-4 drop-shadow-lg">
-            30-Day Engineering <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-brand-500 to-yellow-600 drop-shadow-2xl">
-              Sprint — 25MX
+            {totalMissions}-Day Engineering Sprint{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-brand-500 to-yellow-600 drop-shadow-2xl whitespace-nowrap">
+              — 25MX
             </span>
           </h1>
           <p className="text-slate-400 text-lg md:text-xl font-medium max-w-lg">
             {daysRun.length} mission{daysRun.length !== 1 ? 's' : ''} complete.{' '}
             <span className="text-white">No login required — all {Object.keys(roster).length} students tracked.</span>
           </p>
-          {todayMission && (
-            <Link
-              href={`/activities/${todayMission.date}`}
-              className="mt-5 inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-brand-500/15 border border-brand-500/30 hover:bg-brand-500/25 transition-all group"
-            >
-              <span className="text-xl">{todayMission.companyIcon}</span>
-              <div>
-                <div className="text-[10px] font-bold text-brand-400 uppercase tracking-widest">Today&apos;s Mission</div>
-                <div className="text-sm font-bold text-white">{todayMission.missionName}</div>
+          {(() => {
+            const OWNER = process.env.NEXT_PUBLIC_GITHUB_OWNER ?? 'brittytino'
+            const REPO  = process.env.NEXT_PUBLIC_GITHUB_REPO  ?? 'placement-readiness'
+
+            return (
+              <div className="flex flex-wrap items-center gap-4 mt-6">
+                {todayMission && (
+                  <Link
+                    href={`/activities/${todayMission.date}`}
+                    className="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-brand-500/15 border border-brand-500/30 hover:bg-brand-500/25 transition-all group"
+                  >
+                    <span className="text-xl">{todayMission.companyIcon}</span>
+                    <div>
+                      <div className="text-[10px] font-bold text-brand-400 uppercase tracking-widest">Today&apos;s Mission</div>
+                      <div className="text-sm font-bold text-white">{todayMission.missionName}</div>
+                    </div>
+                    <span className="text-brand-500 ml-1 group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                )}
+
+                <a
+                  href={`https://github.com/${OWNER}/${REPO}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[#141414] border border-slate-800 hover:bg-[#1f1f1f] hover:border-slate-700 transition-all text-sm font-semibold text-slate-300 hover:text-white group"
+                >
+                  <svg className="w-4 h-4 text-yellow-500 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 .587l3.668 7.431 8.2 1.191-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.132 9.209l8.2-1.191L12 .587z" />
+                  </svg>
+                  <span>Star on GitHub</span>
+                  <span className="text-slate-500 group-hover:translate-x-0.5 transition-transform text-xs">↗</span>
+                </a>
               </div>
-              <span className="text-brand-500 ml-1 group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          )}
+            )
+          })()}
         </div>
       </div>
 
@@ -236,20 +259,20 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Row 3: Heatmap & Top 5 ─────────────────────────────────────────── */}
+      {/* ── Row 3: Radar Chart & Top 5 ─────────────────────────────────────────── */}
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="card lg:col-span-2">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-bold text-lg text-white">Cohort Submission Heatmap</h2>
-            <span className="text-xs font-medium text-brand-500">Colour = % submitted that day</span>
+            <h2 className="font-bold text-lg text-white">Cohort Skill Mastery</h2>
+            <span className="text-xs font-medium text-brand-500">Based on Submissions</span>
           </div>
           <div className="bg-[#050505] border border-slate-800 rounded-xl p-6 overflow-x-auto">
-            {/* Minimal wrapper to use the existing Heatmap component */}
-            <AggregatedHeatmap
-              attendance={attendance}
-              daysRun={daysRun}
-              totalStudents={totalStudents}
-            />
+            <CohortRadarChart
+            attendance={attendance}
+            daysRun={daysRun}
+            totalStudents={totalStudents}
+            missions={MISSIONS_DATA}
+          />
           </div>
         </div>
 

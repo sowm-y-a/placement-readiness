@@ -1,5 +1,7 @@
 {
   "team2": {
+    "name": "Team 2",
+    "lab": "LAB",
     "members": [
       "25mx318",
       "25mx102",
@@ -20,11 +22,13 @@
       "25mx351",
       "25mx203"
     ],
-    "averageScore": 45,
-    "attendanceRate": 4.1,
+    "averageScore": 0,
+    "attendanceRate": 0,
     "helpingBonus": 0
   },
   "team1": {
+    "name": "Team 1",
+    "lab": "LAB",
     "members": [
       "25mx301",
       "25mx205",
@@ -45,11 +49,13 @@
       "25mx334",
       "25mx210"
     ],
-    "averageScore": 45.8,
-    "attendanceRate": 4.1,
+    "averageScore": 1.1,
+    "attendanceRate": 0.1,
     "helpingBonus": 0
   },
   "team6": {
+    "name": "Team 6",
+    "lab": "LAB",
     "members": [
       "25mx124",
       "25mx316",
@@ -70,11 +76,13 @@
       "25mx211",
       "25mx224"
     ],
-    "averageScore": 47.5,
-    "attendanceRate": 4.3,
+    "averageScore": 2.8,
+    "attendanceRate": 0.2,
     "helpingBonus": 0
   },
   "team3": {
+    "name": "Team 3",
+    "lab": "LAB",
     "members": [
       "25mx336",
       "25mx111",
@@ -95,11 +103,13 @@
       "25mx350",
       "25mx218"
     ],
-    "averageScore": 45.6,
-    "attendanceRate": 4.2,
+    "averageScore": 1.1,
+    "attendanceRate": 0.1,
     "helpingBonus": 0
   },
   "team5": {
+    "name": "Team 5",
+    "lab": "LAB",
     "members": [
       "25mx104",
       "25mx119",
@@ -120,11 +130,13 @@
       "25mx115",
       "25mx221"
     ],
-    "averageScore": 45,
-    "attendanceRate": 4.1,
+    "averageScore": 0,
+    "attendanceRate": 0,
     "helpingBonus": 0
   },
   "team7": {
+    "name": "Team 7",
+    "lab": "LAB",
     "members": [
       "25mx326",
       "25mx113",
@@ -142,11 +154,13 @@
       "25mx324",
       "25mx112"
     ],
-    "averageScore": 46,
-    "attendanceRate": 4.2,
+    "averageScore": 3.3,
+    "attendanceRate": 0.3,
     "helpingBonus": 0
   },
   "team4": {
+    "name": "Team 4",
+    "lab": "LAB",
     "members": [
       "25mx358",
       "25mx117",
@@ -167,8 +181,8 @@
       "25mx361",
       "25mx226"
     ],
-    "averageScore": 45,
-    "attendanceRate": 4.1,
+    "averageScore": 0,
+    "attendanceRate": 0,
     "helpingBonus": 0
   }
 }

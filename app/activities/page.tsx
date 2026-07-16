@@ -8,7 +8,7 @@ import { getMission, MISSIONS_DATA, WEEK_THEMES, isMissionUnlocked } from '@/lib
 
 export const metadata: Metadata = {
   title: 'Mission Control',
-  description: '30-day Engineering Sprint mission timeline. Track past missions and preview upcoming ones for the 25MX Placement Readiness cohort.',
+  description: 'Engineering Sprint mission timeline. Track past missions and preview upcoming ones for the 25MX Placement Readiness cohort.',
 }
 
 export const revalidate = 60
@@ -37,7 +37,7 @@ export default async function ActivitiesPage() {
         <div className="relative z-20 max-w-2xl">
           <div className="flex items-center gap-2 text-xs text-brand-400 mb-4 font-bold uppercase tracking-widest bg-brand-500/10 w-max px-3 py-1.5 rounded-full border border-brand-500/20">
             <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,1)]" />
-            30-Day Engineering Sprint
+            {totalMissions}-Day Engineering Sprint
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight leading-[1.1] mb-3">
             Mission <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-brand-500 to-yellow-600">Control</span>

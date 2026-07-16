@@ -31,7 +31,12 @@ const ROOT = resolve(__dirname, '..');
 function readJSON(relPath) {
   const abs = resolve(ROOT, relPath);
   if (!existsSync(abs)) return null;
-  return JSON.parse(readFileSync(abs, 'utf8'));
+  try {
+    return JSON.parse(readFileSync(abs, 'utf8'));
+  } catch (err) {
+    console.error(`⚠️ Error parsing ${relPath}:`, err.message);
+    return null;
+  }
 }
 
 function writeJSON(relPath, data) {
@@ -54,15 +59,26 @@ function listDirs(absPath) {
 // Check if a file is non-empty and has required section headers (documentation heuristic)
 function documentationScore(readmePath) {
   if (!existsSync(readmePath)) return 0;
-  const content = readFileSync(readmePath, 'utf8').trim();
-  if (content.length < 20) return 0;
-  // Check for at least one markdown heading
-  const hasHeading = /^#+\s+\S/m.test(content);
-  // Check for meaningful content (more than just the template blanks)
-  const filledIn = content.replace(/<!--.*?-->/gs, '').trim().length > 80;
-  if (hasHeading && filledIn) return 5;
-  if (filledIn) return 3;
-  return 1;
+  
+  try {
+    const stats = statSync(readmePath);
+    if (!stats.isFile()) return 0; // Prevent crash if it's accidentally a directory
+
+    const content = readFileSync(readmePath, 'utf8').trim();
+    if (content.length < 20) return 0;
+    
+    // Check for at least one markdown heading
+    const hasHeading = /^#+\s+\S/m.test(content);
+    // Check for meaningful content (more than just the template blanks)
+    const filledIn = content.replace(/<!--.*?-->/gs, '').trim().length > 80;
+    
+    if (hasHeading && filledIn) return 5;
+    if (filledIn) return 3;
+    return 1;
+  } catch (err) {
+    console.error(`⚠️ Error reading ${readmePath}:`, err.message);
+    return 0; // Graceful fallback on crash
+  }
 }
 
 // ── Load data ────────────────────────────────────────────────────────────────
@@ -131,9 +147,14 @@ for (const roll of Object.keys(roster)) {
     const documentation = submitted > 0 ? Math.max(prev.documentation ?? 0, docHeuristic) : 0;
 
     // quality / reflection / prompting: default to 5 if newly submitted and not yet graded
-    const quality     = submitted > 0 ? (prev.quality     ?? 5) : 0;
-    const reflection  = submitted > 0 ? (prev.reflection  ?? 5) : 0;
-    const prompting   = day === '2026-07-17' || day === '2026-07-16' ? 0 : (submitted > 0 ? (prev.prompting ?? 5) : 0);
+    const justSubmitted = submitted > 0 && (prev.submitted === 0 || prev.submitted === undefined);
+    
+    // If they just submitted, give them the default 5. Otherwise keep their existing score.
+    // However, if they had 0 but prev.submitted was undefined (first run), also give 5.
+    // The safest fallback if prev.quality is 0 but they submitted is to give 5 if they just submitted.
+    const quality     = submitted > 0 ? (justSubmitted ? 5 : (prev.quality || 5)) : 0;
+    const reflection  = submitted > 0 ? (justSubmitted ? 5 : (prev.reflection || 5)) : 0;
+    const prompting   = day === '2026-07-17' || day === '2026-07-16' ? 0 : (submitted > 0 ? (justSubmitted ? 5 : (prev.prompting || 5)) : 0);
 
     byDay[day] = { submitted, quality, reflection, prompting, documentation };
   }
@@ -180,8 +201,8 @@ for (const [teamId, teamData] of Object.entries(existingTeams)) {
   const attendanceRate = totalSlots > 0 ? Math.round(presentCount / totalSlots * 1000) / 10 : 0;
 
   teams[teamId] = {
-    name: teamData.name,
-    lab: teamData.lab,
+    name: teamData.name || `Team ${teamId.replace('team', '')}`,
+    lab: teamData.lab || 'LAB',
     members: teamData.members,
     averageScore,
     attendanceRate,

@@ -28,9 +28,16 @@ async function fetchJSON<T>(filePath: string): Promise<T> {
     const fileContents = await fs.readFile(fullPath, 'utf8')
     // Strip UTF-8 BOM if present
     const cleanContents = fileContents.replace(/^\uFEFF/, '')
-    return JSON.parse(cleanContents) as T
+    try {
+      return JSON.parse(cleanContents) as T
+    } catch (parseError) {
+      console.error(`⚠️ JSON Parse Error in ${filePath}:`, parseError)
+      // Return a safe fallback based on the expected type (usually an object)
+      return {} as unknown as T
+    }
   } catch (error) {
-    throw new Error(`Failed to read local file ${filePath}: ${error instanceof Error ? error.message : String(error)}`)
+    console.error(`⚠️ Failed to read local file ${filePath}:`, error)
+    return {} as unknown as T
   }
 }
 

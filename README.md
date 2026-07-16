@@ -22,20 +22,37 @@ A fully transparent, GitHub-driven leaderboard and submission portal. No databas
 <!-- LEADERBOARD:START -->
 | Rank | Student | Roll No | Score | Attendance |
 |------|---------|---------|-------|-----------|
-| 🥇 1 | Tino Britty J | 25mx354 | 60 | 3/3 (100%) |
-| 🥈 2 | BARATHVIKRAMAN S K | 25mx103 | 60 | 2/3 (67%) |
-| 🥉 3 | Abishek S | 25mx301 | 60 | 2/3 (67%) |
-| 4 | Tamilini S | 25mx352 | 55 | 3/3 (100%) |
-| 5 | ROHITHMAHESHWARAN K | 25mx342 | 45 | 2/3 (67%) |
-| 6 | Shanmugappriya K | 25mx223 | 45 | 2/3 (67%) |
-| 7 | Surya Krishna S | 25mx126 | 45 | 2/3 (67%) |
-| 8 | Radhu Dharsan K M | 25mx341 | 45 | 2/3 (67%) |
-| 9 | STEPHINA SMILY C | 25mx125 | 45 | 2/3 (67%) |
-| 10 | Saravanavel P | 25mx220 | 45 | 2/3 (67%) |
+| 🥇 1 | Tino Britty J | 25mx354 | 25 | 1/1 (100%) |
+| 🥈 2 | KASBIYA M | 25mx322 | 25 | 1/1 (100%) |
+| 🥉 3 | SABARISH P | 25mx343 | 25 | 1/1 (100%) |
+| 4 | Meyappan R | 25mx326 | 25 | 1/1 (100%) |
+| 5 | Induja E | 25mx315 | 20 | 1/1 (100%) |
+| 6 | Tamilini S | 25mx352 | 20 | 1/1 (100%) |
+| 7 | ROHITHMAHESHWARAN K | 25mx342 | 0 | 0/1 (0%) |
+| 8 | Shanmugappriya K | 25mx223 | 0 | 0/1 (0%) |
+| 9 | Surya Krishna S | 25mx126 | 0 | 0/1 (0%) |
+| 10 | Radhu Dharsan K M | 25mx341 | 0 | 0/1 (0%) |
 
-**🏆 Top Team:** undefined (avg: 46.7 pts)
-**Today's submissions:** 2/123 students submitted on 2026-07-16 · **Last updated:** 2026-07-16
+**🏆 Top Team:** Team 7 (avg: 3.3 pts)
+**Today's submissions:** 6/123 students submitted on 2026-07-16 · **Last updated:** 2026-07-16
 <!-- LEADERBOARD:END -->
+
+---
+
+## Automated Scoring System
+
+The portal uses an automated bot (`scripts/recalculate-scores.mjs`) to assign scores for each day's submission. The maximum score for standard days is **30 points**, but **Day 1 and Day 2** have a max of **25 points** (Prompting is disabled).
+
+Here is exactly how the daily marks are calculated:
+
+- **Submission (`+10 pts`)**: Automatically given if you created your folder and pushed code.
+- **Documentation (`+0 to +5 pts`)**: An automated heuristic checks your `README.md`. If it has markdown headers (`#`) and more than 80 characters of custom text, you get 5 points. If it's missing, mostly empty, or you just copy-pasted the blank template, you get 0 points.
+- **Quality (`+5 pts`)**: Given by default (until manual review).
+- **Reflection (`+5 pts`)**: Given by default (until manual review).
+- **Prompting (`+5 pts`)**: 0 points on Day 1 & Day 2 (disabled). Otherwise, given by default (until manual review).
+
+> [!TIP]
+> If you received `20 points` instead of `25 points` on Day 1, your `README.md` failed the documentation check! Make sure to write actual content in your README.
 
 ---
 

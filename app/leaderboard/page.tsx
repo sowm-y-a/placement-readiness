@@ -27,7 +27,7 @@ export default async function LeaderboardPage() {
           Individual <span className="text-gradient">Leaderboard</span>
         </h1>
         <p className="text-slate-400 mt-1">
-          {students.length} students · {daysRun.length} days · Max possible: {daysRun.length * 45} pts
+          {students.length} students · {daysRun.length} days · Max possible: {daysRun.length * 30} pts
         </p>
       </div>
 

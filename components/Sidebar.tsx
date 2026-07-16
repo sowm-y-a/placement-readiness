@@ -32,11 +32,21 @@ export default function Sidebar({ githubOwner, githubRepo }: SidebarProps) {
           </div>
           <span className="font-bold text-white text-sm">25MX Readiness</span>
         </Link>
-        <button onClick={() => setIsOpen(true)} className="text-slate-400 hover:text-white transition-colors p-1">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+        <div className="flex items-center gap-3">
+          <a
+            href={`https://github.com/${githubOwner}/${githubRepo}`}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500/10 border border-brand-500/25 text-brand-400 text-xs font-bold transition-all hover:bg-brand-500/20 hover:scale-105 active:scale-95"
+          >
+            <span>⭐ Star</span>
+          </a>
+          <button onClick={() => setIsOpen(true)} className="text-slate-400 hover:text-white transition-colors p-1">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Overlay */}
@@ -104,8 +114,33 @@ export default function Sidebar({ githubOwner, githubRepo }: SidebarProps) {
         </a>
       </nav>
 
+      {/* Star the Repo Card */}
+      <div className="px-4 mb-4 mt-auto">
+        <a
+          href={`https://github.com/${githubOwner}/${githubRepo}`}
+          target="_blank"
+          rel="noreferrer"
+          className="relative block overflow-hidden rounded-xl border border-brand-500/20 bg-brand-500/5 p-4 transition-all duration-300 hover:border-brand-500/40 hover:bg-brand-500/10 group shadow-[0_4px_20px_rgba(245,158,11,0.02)]"
+        >
+          <div className="absolute -right-3 -top-3 text-brand-500/10 group-hover:scale-110 transition-transform duration-300">
+            <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 .587l3.668 7.431 8.2 1.191-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.132 9.209l8.2-1.191L12 .587z" />
+            </svg>
+          </div>
+          <div className="flex items-center gap-2 mb-1">
+            <svg className="w-4 h-4 text-brand-500 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 .587l3.668 7.431 8.2 1.191-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.132 9.209l8.2-1.191L12 .587z" />
+            </svg>
+            <span className="text-xs font-bold text-brand-400 uppercase tracking-wider">Star the Repo</span>
+          </div>
+          <p className="text-[11px] text-slate-400 leading-relaxed pr-4">
+            Show support! Give a star to our repository on GitHub.
+          </p>
+        </a>
+      </div>
+
       {/* Bottom section with hexagon */}
-      <div className="px-6 pb-8 relative mt-auto">
+      <div className="px-6 pb-8 relative">
         <div className="bg-[#0a0a0a]/80 backdrop-blur-md border border-slate-800/60 rounded-xl p-4 relative z-10">
           <div className="flex items-start justify-between">
             <p className="text-xs font-medium text-slate-400 leading-relaxed mb-4">
